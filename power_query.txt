@@ -1,0 +1,46 @@
+let
+    // --- CONFIG ---
+    BaseUrl    = "https://data.humdata.org/api/action/datastore_search",
+    ResourceID = "ADD_RESOURCE_ID",
+    PageSize   = 32000,          // max per request
+    ApiToken   = "ADD_PERSONAL_TOKEN",  
+
+    // --- STEP 1: GET TOTAL ROWS ---
+    FirstUrl   = BaseUrl & "?" & "resource_id=" & ResourceID & "&limit=1",
+    FirstCall  = Json.Document(
+                   Web.Contents(
+                     FirstUrl,
+                     [ Headers = [ Authorization = ApiToken ] ]
+                   )
+                 ),
+    TotalRows  = FirstCall[result][total],
+
+    // --- STEP 2: FUNCTION TO FETCH ONE PAGE ---
+    GetPage = (Offset as number) as list =>
+        let
+            Url     = BaseUrl
+                      & "?"
+                      & "resource_id=" & ResourceID
+                      & "&limit="  & Number.ToText(PageSize)
+                      & "&offset=" & Number.ToText(Offset),
+            Source  = Json.Document(
+                        Web.Contents(
+                          Url,
+                          [ Headers = [ Authorization = ApiToken ] ]
+                        )
+                      ),
+            Records = try Source[result][records] otherwise {}
+        in
+            Records,
+
+    // --- STEP 3: OFFSETS AND DOWNLOAD ---
+    Offsets    = List.Numbers(0, Number.RoundUp(TotalRows / PageSize), PageSize),
+    Pages      = List.Transform(Offsets, each GetPage(_)),
+    Flattened  = List.Combine(Pages),
+
+    // --- STEP 4: TO TABLE ---
+    TableOut   = if List.IsEmpty(Flattened)
+                 then #table({}, {})
+                 else Table.FromRecords(Flattened)
+in
+    TableOut

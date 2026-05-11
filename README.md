@@ -1,6 +1,6 @@
 # HDX Tabular Data Endpoints Quickstart
 
-This repository contains a Jupyter Notebook using Python and a PowerQuery script that demonstrates how to interact with the [HDX Tabular Data Endpoints](https://un-ocha-centre-for-humanitarian.gitbook.io/hdx-docs/build-with-hdx/build-with-hdx/hdx-api/tabular-data-endpoints). It is a simple hands on guide for testing queries, exploring data, and learning how to programmatically access tabular data resources on HDX. You can use it as inspiration for incorporating HDX data resources into your own workflows.
+This repository contains a Jupyter Notebook using Python and a PowerQuery script that demonstrates how to interact with the [HDX Tabular Data Endpoints](https://docs.humdata.org/build/hdx-apis/tabular-data-endpoints). It is a simple hands on guide for testing queries, exploring data, and learning how to programmatically access tabular data resources on HDX. You can use it as inspiration for incorporating HDX data resources into your own workflows.
 
 For more information, please refer to the HDX documentation or reach out using the contact details below.
 
@@ -18,7 +18,7 @@ For more information, please refer to the HDX documentation or reach out using t
 - Python libraries:
   - `pandas`
   - `requests`
-- HDX API Token (see information [here](https://un-ocha-centre-for-humanitarian.gitbook.io/hdx-docs/build-with-hdx/build-with-hdx/overview/hdx-core-concepts))
+- HDX API Token (see information [here](https://docs.humdata.org/build/overview/hdx-core-concepts))
 
 Install dependencies with:
 
